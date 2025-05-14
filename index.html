@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificação de Perfil - Discord</title>
+  <link rel="icon" href="https://i.postimg.cc/MG7qzW4x/emote.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #181818;
+      color: #f9f9f9;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background-color: #252525;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: bold; /* Título em negrito */
+    }
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+    textarea, input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #333;
+      color: #f9f9f9;
+    }
+    button.generate {
+      width: 100%;
+      background-color: #555;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    button.generate:hover {
+      background-color: #777;
+    }
+    .output {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      margin-top: 20px;
+      border: 1px solid #333;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #aaa;
+      margin-top: 30px;
+    }
+    .footer img {
+      margin-top: 10px;
+      width: 120px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gerador de Verificação</h1>
+
+    <label for="titulo">Título (opcional):</label>
+    <input type="text" id="titulo" placeholder="Digite um título">
+
+    <label for="ids">IDs do Discord (um por linha):</label>
+    <textarea id="ids" rows="5" placeholder="123456789012345678"></textarea>
+
+    <label for="motivos">Motivos (um por linha, opcional):</label>
+    <textarea id="motivos" rows="5" placeholder="Motivo da verificação..."></textarea>
+
+    <label for="ordem">Ordem de saída:</label>
+    <select id="ordem">
+      <option value="motivo-antes">Motivo antes do ID</option>
+      <option value="id-antes" selected>ID antes do Motivo</option>
+    </select>
+
+    <button class="generate" onclick="gerarMensagem()">Gerar Resultado</button>
+
+    <div class="output" id="resultado"></div>
+  </div>
+
+  <div class="footer">
+    <img src="https://i.postimg.cc/WzSNyqxY/Jacky-Confuso.png" alt="Jacky Confuso">
+    <p>© 2025 - Todos os direitos reservados. Feito com ❤, ajuda de IA e um pouquinho de preguiça por <a href="https://jackymayers.github.io/" target="_blank" style="color:#f9f9f9;">Jacky Mayers</a>!</p>
+  </div>
+
+  <script>
+    function gerarMensagem() {
+      const titulo = document.getElementById('titulo').value.trim();
+      const ids = document.getElementById('ids').value.trim().split(/\n|\r/).filter(l => l);
+      const motivos = document.getElementById('motivos').value.trim().split(/\n|\r/);
+      const ordem = document.getElementById('ordem').value;
+
+      let saida = '';
+      if (titulo) {
+        saida += `**${titulo}**\n\n`;
+      }
+
+      ids.forEach((id, i) => {
+        const motivo = motivos[i]?.trim();
+        if (motivo) {
+          if (ordem === 'motivo-antes') {
+            saida += `${motivo} - ${id} | <@${id}>\n`;
+          } else {
+            saida += `${id} | <@${id}> - ${motivo}\n`;
+          }
+        } else {
+          saida += `${id} | <@${id}>\n`;
+        }
+      });
+
+      document.getElementById('resultado').innerText = saida.trim();
+    }
+  </script>
+</body>
+</html>
