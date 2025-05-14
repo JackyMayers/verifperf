@@ -120,12 +120,12 @@
         const motivo = motivos[i]?.trim();
         if (motivo) {
           if (ordem === 'motivo-antes') {
-            saida += `${motivo} - ${id} | <@${id}>\n`;
+            saida += `• ${motivo} - ${id} | <@${id}>\n`;
           } else {
-            saida += `${id} | <@${id}> - ${motivo}\n`;
+            saida += `• ${id} | <@${id}> - ${motivo}\n`;
           }
         } else {
-          saida += `${id} | <@${id}>\n`;
+          saida += `• ${id} | <@${id}>\n`;
         }
       });
 
